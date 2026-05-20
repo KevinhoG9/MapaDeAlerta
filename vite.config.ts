@@ -12,6 +12,7 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
+   base: "/MapaDeAlerta",
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
