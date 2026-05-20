@@ -1,0 +1,6 @@
+@import './fonts.css';
+@import './tailwind.css';
+@import './theme.css';
+@import './alertamap.css';
+
+html, body, #root { min-height: 100dvh; }
