@@ -5057,3 +5057,99 @@ header { flex-wrap: nowrap !important; overflow: hidden; min-height: 50px; }
 * { -webkit-overflow-scrolling: touch; }
 aside > div, .am-fantasy-card { scroll-behavior: smooth; }
 
+
+/* ══ Card mobile — fix completo ══ */
+
+@media (max-width: 520px) {
+  /* Card ocupa quase toda a tela e tem scroll */
+  .am-fantasy-card {
+    width: 97vw !important;
+    max-height: 92dvh !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    border-radius: 20px !important;
+    padding: 8px !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Bottom vira coluna única */
+  .am-fantasy-bottom {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+
+  /* Rank panel menor */
+  .am-fantasy-rank-panel {
+    min-height: auto !important;
+    padding: 14px !important;
+  }
+
+  /* Stats paper ocupa largura toda */
+  .am-fantasy-stats-paper {
+    min-height: auto !important;
+    padding: 12px !important;
+  }
+
+  /* Rank pills full width */
+  .am-fantasy-rank-pill {
+    width: 100% !important;
+    min-height: 52px !important;
+    border-radius: 14px !important;
+  }
+
+  /* Badge 3D menor no mobile */
+  .am-rank-3d-badge {
+    width: 130px !important;
+    height: 130px !important;
+  }
+
+  .am-fantasy-big-emblem {
+    min-height: 150px !important;
+  }
+
+  /* Top do card: foto e tier lado a lado */
+  .am-fantasy-top {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 6px !important;
+  }
+
+  /* Footer com compartilhar sempre visível */
+  .am-fantasy-footer {
+    position: sticky !important;
+    bottom: 0 !important;
+    z-index: 10 !important;
+    padding: 10px 12px !important;
+  }
+
+  /* Stat line mais compacta */
+  .am-fantasy-stat-line {
+    padding: 9px 0 !important;
+  }
+
+  /* Título menor */
+  .am-fantasy-titlebar {
+    padding: 10px 12px !important;
+    min-height: 48px !important;
+  }
+
+  /* Ribbon menor */
+  .am-fantasy-ribbon {
+    min-height: 38px !important;
+    font-size: .82rem !important;
+  }
+
+  /* Modal backdrop centralizado */
+  .am-card-modal-backdrop {
+    padding: 12px !important;
+    align-items: center !important;
+  }
+}
+
+/* Telas muito pequenas (SE) */
+@media (max-width: 375px) {
+  .am-fantasy-card { width: 99vw !important; padding: 6px !important; }
+  .am-fantasy-top { grid-template-columns: 1fr !important; }
+  .am-rank-3d-badge { width: 110px !important; height: 110px !important; }
+}
+

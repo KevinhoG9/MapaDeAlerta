@@ -1498,7 +1498,20 @@ export default function App() {
     if (gpsWatchRef.current!==null) { navigator.geolocation.clearWatch(gpsWatchRef.current); gpsWatchRef.current=null; }
   };
 
-  const handleMapClick = (lat:number, lng:number) => { setClickedLocation({lat,lng}); setToast(null); };
+  const [uiVisible, setUiVisible] = useState(true);
+  const uiHideTimer = useRef<any>(null);
+
+  const handleMapClick = (lat: number, lng: number) => {
+    setClickedLocation({ lat, lng });
+    setToast(null);
+    // Toggle UI visibility on map tap
+    setUiVisible(v => !v);
+    // Auto-mostrar depois de 6s se escondeu
+    if (uiVisible) {
+      clearTimeout(uiHideTimer.current);
+      uiHideTimer.current = setTimeout(() => setUiVisible(true), 6000);
+    }
+  };
 
   const handleReportSubmit = (report:{type:string;desc:string;severity:string;photoURL?:string}) => {
     if (!user) return;
@@ -1710,7 +1723,7 @@ export default function App() {
   };
 
   const isAdmin = isAdminUser(user);
-  const mapControlsVisible = !commandOpen && !chatOpen && !sidebarOpen && !reportOpen && !profileOpen && !pendingReward;
+  const mapControlsVisible = uiVisible && !commandOpen && !chatOpen && !sidebarOpen && !reportOpen && !profileOpen && !pendingReward;
   const rankTheme = getDivisionStage(user.ecoPoints || 0);
   const rankThemeStyle = {
     '--forest': rankTheme.color,
@@ -1858,6 +1871,12 @@ export default function App() {
           />
 
           {/* Filter chips */}
+          {/* Hint quando UI tá escondida */}
+          {!uiVisible && !commandOpen && !chatOpen && !sidebarOpen && !reportOpen && (
+            <div onClick={()=>setUiVisible(true)} style={{ position:'fixed',bottom:24,left:'50%',transform:'translateX(-50%)',zIndex:800,padding:'8px 18px',borderRadius:99,background:'rgba(0,0,0,.45)',backdropFilter:'blur(8px)',color:'white',fontSize:'.78rem',fontWeight:700,letterSpacing:'.02em',pointerEvents:'auto',cursor:'pointer' }}>
+              Toque para mostrar controles
+            </div>
+          )}
           {mapControlsVisible && <div className="map-filter-bar" style={{ position:'absolute',top:10,left:8,right:58,zIndex:200,display:'flex',alignItems:'center',gap:3,background:dm?'rgba(26,26,46,.95)':'rgba(255,255,255,.97)',border:`1px solid ${topbarBorder}`,borderRadius:99,padding:'5px 8px',boxShadow:'0 4px 24px rgba(0,0,0,.13)',backdropFilter:'blur(10px)',overflowX:'auto',scrollbarWidth:'none',animation:'chipsIn .5s .1s cubic-bezier(.34,1.56,.64,1) both',WebkitOverflowScrolling:'touch' }}>
             {[
               { key:'all',     label:'Todos',       Icon:MapIco,    ic:undefined },
